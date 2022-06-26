@@ -1,23 +1,31 @@
-import java.util.Objects;
-public class LineComparisionComputaion {
-    public static void main(String[] args) {
-        System.out.println("Welcome Line Comparision Computation Program");
+public class LineComparisionComputation {
 
+    public static void main(String[] args) {
         Line l1 = new Line(0, 0, 0, 10);
         Line l2 = new Line(10, 0, 10, 10);
 
-        System.out.println(l1.equals(l2));
+        System.out.println(lineDescription(l1.compareTo(l2)));
 
         l1 = new Line(0, 0, 0, 10);
         l2 = new Line(10, 0, 20, 10);
 
-        System.out.println(l1.equals(l2));
+        System.out.println(lineDescription(l1.compareTo(l2)));
 
+    }
+
+    public static String lineDescription(int val) {
+        if (val > 0) {
+            return "Line 1 Greater";
+        } else if (val < 0) {
+            return "Line 1 Smaller";
+        } else {
+            return "Line 1 and Line 2 are equal";
+        }
     }
 
 }
 
-class Line {
+class Line implements Comparable<Line> {
     private int x1;
     private int y1;
     private int x2;
@@ -68,13 +76,8 @@ class Line {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(x1, x2, y1, y2);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        Line other = (Line) obj;
+    public int compareTo(Line o) {
+        Line other = (Line) o;
         // line 1
         double line1x = Math.pow((x2 - x1), 2);
         double line1y = Math.pow((y2 - y1), 2);
@@ -84,9 +87,7 @@ class Line {
         double line2y = Math.pow((other.y2 - other.y1), 2);
         double length2 = Math.sqrt(line2x + line2y);
 
-        if (length1 == length2) {
-            return true;
-        }
-        return false;
+        return (int) (length1 - length2);
     }
+
 }
